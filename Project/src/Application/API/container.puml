@@ -1,0 +1,61 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+' This is a comment on a single line
+User->App : Lançamentos
+/' You quote alors use slash-and-quote
+to split your comments on several
+lines '/
+
+Container(spa, "NFT Commerce", "Razor", "Provides all the functionality via web browser.")
+'Container(ma, "Mobile App", "Xamarin", "Provides a limited subset ot the internet banking functionality to customers via their mobile mobile device.")
+Container(db, "Database", "Relational Database Schema", "Stores information, hashed authentication credentials, access logs, etc.")
+
+'System_Ext(mbs, "Mainframe Banking System", "Stores all of the core wallet information about transactions.")
+
+Container_Boundary(api, "API Gateway") {
+    Component(sign, "Lançamentos", "Producer Controle Lancamento.", "Allows users to sign in system")
+    Component(accounts, "Consolidados", "Producer Controle Consolidado.", "Provides a summory of their accounts")
+    'Component(security, "Security Component", "Spring Bean", "Provides functionality related to singing in, changing passwords, etc.")
+    'Component(mbsfacade, "Mainframe Banking System Facade", "Spring Bean", "A facade onto the mainframe banking system.")
+
+    'Rel(sign, security, "Uses")
+    'Rel(accounts, mbsfacade, "Uses")
+    'Rel(security, db, "Read & write to", "JDBC")
+    'Rel(mbsfacade, mbs, "Uses", "XML/HTTPS")
+    
+}
+
+Rel(spa, sign, "Uses", "JSON/HTTPS")
+Rel(spa, accounts, "Uses", "JSON/HTTPS")
+
+'Rel(ma, sign, "Uses", "JSON/HTTPS")
+'Rel(ma, accounts, "Uses", "JSON/HTTPS")
+
+Container(spa1, "NFT Commerce", "Razor", "Provides all the functionality via web browser.")
+'Container(ma, "Mobile App", "Xamarin", "Provides a limited subset ot the internet banking functionality to customers via their mobile mobile device.")
+Container(db1, "Database", "Relational Database Schema", "Stores information, hashed authentication credentials, access logs, etc.")
+
+'System_Ext(mbs, "Mainframe Banking System", "Stores all of the core wallet information about transactions.")
+
+Container_Boundary(api, "API Gateway") {
+    Component(sign1, "Lançamentos", "Producer Controle Lancamento.", "Allows users to sign in system")
+    Component(accounts1, "Consolidados", "Producer Controle Consolidado.", "Provides a summory of their accounts")
+    'Component(security, "Security Component", "Spring Bean", "Provides functionality related to singing in, changing passwords, etc.")
+    'Component(mbsfacade, "Mainframe Banking System Facade", "Spring Bean", "A facade onto the mainframe banking system.")
+
+    'Rel(sign, security, "Uses")
+    'Rel(accounts, mbsfacade, "Uses")
+    'Rel(security, db, "Read & write to", "JDBC")
+    'Rel(mbsfacade, mbs, "Uses", "XML/HTTPS")
+    
+}
+
+'Rel(spa1, sign1, "Uses", "JSON/HTTPS")
+'Rel(spa1, accounts1, "Uses", "JSON/HTTPS")
+
+
+
+@enduml

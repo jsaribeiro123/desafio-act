@@ -1,0 +1,27 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Deployment.puml
+
+!define DEVICONS /plantuml-icon-font-sprites/devicons
+!define FONTAWESOME /plantuml-icon-font-sprites/font-awesome-5
+
+LAYOUT_TOP_DOWN()
+LAYOUT_WITH_LEGEND()
+
+title Context Diagram for Books System
+
+Person(person_authorized,     "Authorized User via REST API", "Backend Services / Frontend Services", "user_check")
+
+System(system, "Books System", "Allows interacting with book records.")
+
+System_Ext(system_ext_authorization, "Authorization System", "Authorizes access to resources.")
+System_Ext(system_ext_publisher1,    "Publisher 1 System ",  "Gives details about books published by them.")
+System_Ext(system_ext_publisher2,    "Publisher 2 System",   "Gives details about books published by them.")
+
+Rel(person_authorized, system, "Reads and writes records using")
+Rel(person_ext_public, system, "Reads records using")
+
+Rel(system, system_ext_authorization, "Accesses authorization details using")
+Rel(system, system_ext_publisher1,    "Accesses publisher details using")
+Rel(system, system_ext_publisher2,    "Accesses publisher details using")
+
+@enduml

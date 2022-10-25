@@ -1,0 +1,34 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(comerciante, "Comerciante ", "Ator do sistema, realiza movimentações em uma carteira.")
+
+System(wallet, "Wallet", "Carteira utilizada para registrar a movimentação dos lançamentos de credito e debitos.")
+
+System_Ext(kafka, "Kafka", "Responsavel pela troca de mensagens entre os serviços e repositorios.")
+System_Ext(repository, "Repository", "Persistencia dos lançamentos e informações da carteira e do comerciante.")
+System_Ext(micro_service_lancamento, "Lançamento", "Persistencia dos lançamentos.")
+System_Ext(micro_service_consolidado, "Consolidado", "Consolidado dos lançamentos.")
+
+Rel(comerciante, wallet, "Utiliza <wallet> para a movimentação de creditos e debitos.")
+Rel(kafka, repository, "Recebe solicitação de consumo de topico.")
+Rel(micro_service_lancamento, kafka, "Consome o topico lancamento")
+Rel(micro_service_consolidado, kafka, "Consome o topico consolidado")
+Rel(kafka, wallet, "Publica no topico especifico")
+Rel(wallet, kafka, "Consome o topico consolidado")
+
+System_Ext(application, "Aplicação", "Atende as requisitos funcionais do negócio.")
+System_Ext(service, "Service", "Serviços criados para implementar a aplicação.")
+System_Ext(infraestrutura, "Infraestrutura", "Ambiente que propociona que aplicação e os serviços funcionem.")
+System_Ext(domain, "Dominio", "Conjunto dos conceitos utilizados pela aplicação.")
+
+Rel(application, domain, "Aplicação utliza conceitos do dominio.")
+Rel(application, service, "Aplicação usa os serviços")
+Rel(service, domain, "")
+Rel(service, infraestrutura, "")
+Rel(infraestrutura, domain, "")
+
+
+@enduml
